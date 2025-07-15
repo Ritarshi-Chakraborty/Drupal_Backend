@@ -1,0 +1,16 @@
+services:
+  ritam.route_subscriber:
+    class: Drupal\ritam\EventSubscriber\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  
+  ritam.login_redirect_subscriber:
+    class: Drupal\ritam\EventSubscriber\LoginRedirectSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  ritam.custom_service:
+    class: Drupal\ritam\Service\CustomService
+    arguments: ['@database']
+

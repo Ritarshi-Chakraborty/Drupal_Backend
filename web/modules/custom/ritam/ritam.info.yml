@@ -1,0 +1,7 @@
+name: Ritam
+description: This is my custom module.
+package: Custom Modules
+type: module
+version: 10.x
+core_version_requirement: ^10.3 || ^11
+
