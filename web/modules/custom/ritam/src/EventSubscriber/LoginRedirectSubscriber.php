@@ -5,6 +5,7 @@
     use Symfony\Component\HttpKernel\KernelEvents;
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
     use Symfony\Component\HttpFoundation\RedirectResponse;
+    use Drupal\Core\Url;
 
     class LoginRedirectSubscriber implements EventSubscriberInterface {
 
@@ -20,9 +21,11 @@
 
             if ($session->get('custom_login_redirect')) {
                 $session->remove('custom_login_redirect');
-                $event->setResponse(new RedirectResponse('/welcome'));
+                // Generate URL from Route name
+                $url = Url::fromRoute('ritam.welcome')->toString();
+                // Set the redirect response
+                $event->setResponse(new RedirectResponse($url));
             }
         }
     }
-
 ?>

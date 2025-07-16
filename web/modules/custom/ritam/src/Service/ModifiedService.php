@@ -29,5 +29,4 @@
             return 'This is a modified service.';
         }
     }
-    
 ?>

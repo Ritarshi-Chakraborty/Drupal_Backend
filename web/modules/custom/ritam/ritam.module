@@ -58,4 +58,3 @@
     function ritam_service_alter(array &$services) {
         $services['ritam.custom_service']['class'] = 'Drupal\ritam\Service\ModifiedService';
     }
-

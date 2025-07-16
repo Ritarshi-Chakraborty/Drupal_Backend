@@ -14,3 +14,4 @@ ritam.welcome_link:
   route_name: ritam.welcome
   weight: 3
   menu_name: main
+  

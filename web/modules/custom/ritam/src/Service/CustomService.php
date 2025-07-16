@@ -29,5 +29,4 @@
             return 'Hello everyone! Have a nice day';
         }
     }
-    
 ?>
