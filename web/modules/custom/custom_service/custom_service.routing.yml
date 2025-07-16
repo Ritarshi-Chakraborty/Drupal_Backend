@@ -1,0 +1,15 @@
+custom_service.info:
+  path: '/service-greet'
+  defaults:
+    _controller: Drupal\custom_service\Controller\GreetController::greet
+  requirements:
+    _permission: 'access content'
+
+custom_service.myForm:
+  path: '/service-form'
+  defaults:
+    _form: Drupal\custom_service\Form\MyForm
+    _title: Service Form
+  requirements:
+    _permission: 'access content'
+    

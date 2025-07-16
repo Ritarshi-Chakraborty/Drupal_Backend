@@ -1,0 +1,32 @@
+ritam.index:
+  path: '/ritam'
+  defaults: 
+    _controller: 'Drupal\ritam\Controller\HomeController::index'
+  requirements:
+    _permission: 'access content'
+
+ritam.info:
+  path: '/ritam/info'
+  defaults:
+    _controller: 'Drupal\ritam\Controller\HomeController::info'
+  requirements:
+    _custom_access: '\Drupal\ritam\Access\MyAccessCheck::access'
+  
+ritam.node_id:
+  path: '/ritam/node/{nodeId}'
+  defaults:
+    _controller: 'Drupal\ritam\Controller\HomeController::node'
+  requirements:
+    _permission: 'access content'
+    nodeId: \d+
+  options:
+    parameters:
+      nodeId: \Drupal\node\Entity\Node
+
+ritam.welcome:
+  path: '/welcome'
+  defaults: 
+    _controller: 'Drupal\ritam\Controller\WelcomeController::index'
+  requirements:
+    _permission: 'access content'
+    _role: authenticated
