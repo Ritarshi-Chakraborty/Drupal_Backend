@@ -1,0 +1,18 @@
+custom_form.SimpleForm:
+  path: '/ritam/generic-form'
+  defaults: 
+    _form: 'Drupal\custom_form\Form\SimpleForm'
+    _title: 'Generic Form'
+  requirements:
+    _permission: 'access content'
+
+custom_form.ConfigForm:
+  path: '/admin/config/config-form'
+  defaults:
+    _form: 'Drupal\custom_form\Form\ConfigForm'
+    _title: 'Config Form'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+    

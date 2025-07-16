@@ -1,0 +1,12 @@
+<?php
+
+    /**
+    * Implements hook_form_FORM_ID_alter() 
+    */
+    function custom_form_form_generic_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+        $form['custom_checkbox'] = [
+            '#type' => 'checkbox',
+            '#title' => t('Remember me'),
+            '#default_value' => 0,
+        ];
+    }
