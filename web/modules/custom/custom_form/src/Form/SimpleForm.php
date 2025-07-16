@@ -8,7 +8,7 @@
 
     
     /**
-     * Our simple form class.
+     * Provides a simple form with AJAX-based addition functionality.
      */
     class SimpleForm extends FormBase {
         
@@ -67,7 +67,7 @@
         }
 
         /**
-         * Function to validate name field
+         * {@inheritDoc}
          */
         public function validateForm(array &$form, FormStateInterface $form_state) {
             if(strlen($form_state->getValue('name')) < 3) {
@@ -76,11 +76,15 @@
         }
 
         /**
-         * Function to calculate the sum
+         * AJAX callback to calculate the sum of two numbers.
          *
          * @param array $form
-         * @param FormStateInterface $form_state
-         * @return void
+         *   The form structure.
+         * @param \Drupal\Core\Form\FormStateInterface $form_state
+         *   The current state of the form.
+         *
+         * @return \Drupal\Core\Ajax\AjaxResponse
+         *   The AJAX response with the updated result field.
          */
         public function calculate(array &$form, FormStateInterface $form_state) {
             $num1 = $form_state->getValue('number_1');

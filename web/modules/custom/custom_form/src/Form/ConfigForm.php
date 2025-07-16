@@ -3,36 +3,29 @@
     namespace Drupal\custom_form\Form;
     use Drupal\Core\Form\ConfigFormBase;
     use Drupal\Core\Form\FormStateInterface;
+    use Drupal\Core\Site\Settings;
 
     /**
-     * Custom config form
+     * Defines a custom configuration form for site settings.
      */
     class ConfigForm extends ConfigFormBase {
 
         /**
-         * Function which returns form id
-         *
-         * @return void
+         * {@inheritdoc}
          */
         public function getFormId() {
             return 'site_config_form_settings';
         }
 
         /**
-         * Function which returns the configuration name
-         *
-         * @return void
+         * {@inheritdoc}
          */
         public function getEditableConfigNames() {
             return ['site_config_form.settings'];
         }
 
         /**
-         * Function which creates a form & returns it
-         *
-         * @param array $form
-         * @param FormStateInterface $form_state
-         * @return void
+         * {@inheritdoc}
          */
         public function buildForm(array $form, FormStateInterface $form_state) {
             $config = $this->config('site_config_form.settings');
@@ -72,44 +65,48 @@
         }
 
         /**
-         * Class which validates the different fields
-         *
-         * @param array $form
-         * @param FormStateInterface $form_state
-         * @return void
+         * {@inheritdoc}
          */
         public function validateForm(array &$form, FormStateInterface $form_state){
-            //mobile number validation
+            // Mobile number validation
             $phone = $form_state->getValue('phone_number');
             if (!preg_match('/^[6-9][0-9]{9}$/', $phone)) {
                 $form_state->setErrorByName('phone_number', $this->t('Indian phone number must be exactly of 10 digits where the first digit is between 6-9.'));
             }
             
-            //email validation 1 --> Check if it's a valid email
+            // Email validation
             $email = $form_state->getValue('email_id');
+            $api_key = Settings::get('api_key');
+
+            $url = "http://apilayer.net/api/check?access_key=$api_key&email=$email";
+            $response = file_get_contents($url);
+            $data = json_decode($response, true);
+
+            // Email validation 1 --> Check if it's a valid email
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $form_state->setErrorByName('email_id', $this->t('Invalid email format.'));
             }
+
+            // Email validation 2 --> Check if the email exists or not
+            if(!$data['smtp_check']) {
+                $form_state->setErrorByName('email_id', $this->t('This email id does not exist.'));
+            }
             
-            //email validation 2 --> Check for pulblic domains
+            // Email validation 3 --> Check for pulblic domains
             $public_domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
             $email_domain = strtolower(substr(strrchr($email, "@"), 1));
             if(!in_array($email_domain, $public_domains)) {
                 $form_state->setErrorByName('email_id', $this->t('Please use a public email domain like Gmail, Yahoo, or Outlook.'));
             }
 
-            //email validation 3 --> Check if the email ends in .com
+            // Email validation 4 --> Check if the email ends in .com
             if (!str_ends_with($email, '.com')) {
                 $form_state->setErrorByName('email_id', $this->t('Only ".com" email addresses are allowed.'));
             }
         }
 
         /**
-         * Function which handles the form submission
-         *
-         * @param array $form
-         * @param FormStateInterface $form_state
-         * @return void
+         * {@inheritdoc}
          */
         public function submitForm(array &$form, FormStateInterface $form_state) {
             $config = $this->config('site_config_form.settings');

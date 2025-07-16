@@ -4,3 +4,4 @@ custom_form.ConfigForm:
   route_name: custom_form.ConfigForm
   weight: 2
   parent: system.admin_config_system
+  
