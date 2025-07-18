@@ -1,0 +1,27 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+
+/**
+ * Implements hook_entity_field_access().
+ */
+function rgb_color_picker_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $item = NULL) {
+    if ($field_definition->getName() === 'field_colour') {
+        if ($operation === 'edit') {
+        // Only admins can edit.
+            if (in_array('administrator', $account->getRoles())) {
+                return AccessResult::allowed();
+            }
+            return AccessResult::forbidden();
+        }
+        if ($operation === 'view') {
+            // Let everyone view it.
+            return AccessResult::allowed();
+        }
+    }
+    // Default: let other modules decide.
+    return AccessResult::neutral();
+}
