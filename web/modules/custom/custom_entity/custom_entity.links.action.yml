@@ -1,0 +1,13 @@
+custom_entity.movie.add_action:
+  route_name: entity.movie.add_form
+  title: 'Add Movie'
+  appears_on:
+    - entity.movie.collection
+  weight: -10
+
+custom_entity.award_movie.add_action:
+  route_name: entity.award_movie.add_form
+  title: 'Add Award winning Movie'
+  appears_on:
+    - entity.award_movie.collection
+  weight: -10

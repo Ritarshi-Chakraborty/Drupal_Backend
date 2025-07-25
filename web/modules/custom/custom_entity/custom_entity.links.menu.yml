@@ -1,0 +1,6 @@
+custom_entity.add_award_movie:
+  title: 'Award winning Movies'
+  description: 'Displays the list of movies which has won an award.'
+  route_name: entity.award_movie.collection
+  parent: system.admin_structure
+  weight: 5

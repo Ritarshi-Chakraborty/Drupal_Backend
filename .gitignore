@@ -22,9 +22,6 @@
 # Ignore the settings file
 /web/sites/default/settings.php
 
-# Ignore the custom modules for now
-/web/modules/custom/
-
 # Generally you should only ignore the root vendor directory. It's important
 # that core/assets/vendor and any other vendor directories within contrib or
 # custom module, theme, etc., are not ignored unless you purposely do so.
@@ -55,7 +52,7 @@
 #/.idea/
 
 # Ignore .env files as they are personal
-#/.env
+/.env
 
 # Ignore node_modules
 node_modules/

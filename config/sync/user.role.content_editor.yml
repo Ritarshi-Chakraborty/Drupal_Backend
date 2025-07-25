@@ -9,6 +9,7 @@ dependencies:
   module:
     - comment
     - contextual
+    - custom_entity
     - file
     - node
     - path
@@ -37,6 +38,7 @@ permissions:
   - 'delete own files'
   - 'delete own page content'
   - 'delete page revisions'
+  - 'edit movie'
   - 'edit own article content'
   - 'edit own comments'
   - 'edit own page content'

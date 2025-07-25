@@ -1,0 +1,11 @@
+'view movie':
+  title: View movie entities
+
+'add movie':
+  title: Add movie entities
+
+'edit movie':
+  title: Edit movie entities
+
+'delete_movie':
+  title: Delete movie entities

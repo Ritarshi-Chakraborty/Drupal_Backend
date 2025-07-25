@@ -1,0 +1,23 @@
+custom_entity.movies_tab:
+  title: 'Movies'
+  base_route: system.admin_content
+  route_name: entity.movie.collection
+  weight: 10
+
+custom_entity.movie.view_tab:
+  title: 'View'
+  base_route: entity.movie.canonical
+  route_name: entity.movie.canonical
+  weight: 0
+
+custom_entity.movie.edit_tab:
+  title: 'Edit'
+  base_route: entity.movie.canonical
+  route_name: entity.movie.edit_form
+  weight: 1
+
+custom_entity.movie.delete_tab:
+  title: 'Delete'
+  base_route: entity.movie.canonical
+  route_name: entity.movie.delete_form
+  weight: 2

@@ -1,0 +1,79 @@
+entity.movie.canonical:
+  path: '/movie/{movie}'
+  defaults:
+    _entity_view: 'movie.full'
+    _title_callback: '\Drupal\custom_entity\Controller\MovieController::movieDetails'
+  requirements:
+    _permission: 'view movie'
+
+entity.movie.add_form:
+  path: '/movie/add'
+  defaults:
+    _entity_form: 'movie.add'
+    _title: 'Add Movie'
+  requirements:
+    _permission: 'add movie'
+
+entity.movie.edit_form:
+  path: '/movie/{movie}/edit'
+  defaults:
+    _entity_form: 'movie.edit'
+    _title: 'Edit Movie'
+  requirements:
+    _permission: 'edit movie'
+
+entity.movie.delete_form:
+  path: '/movie/{movie}/delete'
+  defaults:
+    _entity_form: 'movie.delete'
+    _title: 'Delete Movie'
+  requirements:
+    _permission: 'delete movie'
+
+entity.movie.collection:
+  path: '/admin/content/movie'
+  defaults:
+    _entity_list: 'movie'
+    _title: Movie list
+  requirements:
+    _permission: 'view movie'
+
+entity.award_movie.canonical:
+  path: '/admin/structure/award-movie/{award_movie}'
+  defaults:
+    _entity_view: 'award_movie.full'
+    _controller: '\Drupal\custom_entity\Controller\MovieController::awardMovieDetails'
+  requirements:
+    _entity_access: 'award_movie.view'
+
+entity.award_movie.collection:
+  path: '/admin/structure/award-movies'
+  defaults:
+    _entity_list: 'award_movie'
+    _title: 'Award Winning Movies'
+  requirements:
+    _role: administrator
+
+entity.award_movie.add_form:
+  path: '/admin/structure/award-movie/add'
+  defaults:
+    _entity_form: 'award_movie.add'
+    _title: 'Add an award winning movie'
+  requirements:
+    _role: administrator
+
+entity.award_movie.edit_form:
+  path: '/admin/structure/award-movie/{award_movie}/edit'
+  defaults:
+    _entity_form: 'award_movie.edit'
+    _title: 'Edit award winning movie'
+  requirements:
+    _role: administrator
+
+entity.award_movie.delete_form:
+  path: '/admin/structure/award-movie/{award_movie}/delete'
+  defaults:
+    _entity_form: 'award_movie.delete'
+    _title: 'Delete award winning movie'
+  requirements:
+    _role: administrator

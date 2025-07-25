@@ -1,0 +1,8 @@
+uuid: e980ca1d-cc60-4745-8353-a7b7e022bc15
+langcode: en
+status: true
+dependencies: {  }
+id: 62a7cb59-4389-4e01-b516-94984f23f973
+award_name: 'Oscar for Best Movie'
+movie_title: Interstellar
+year: '2014'

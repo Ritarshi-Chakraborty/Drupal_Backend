@@ -7,6 +7,7 @@ dependencies:
   module:
     - comment
     - contact
+    - custom_entity
     - file
     - filter
     - search
@@ -23,8 +24,10 @@ permissions:
   - 'access content'
   - 'access shortcuts'
   - 'access site-wide contact form'
+  - 'add movie'
   - 'delete own files'
   - 'post comments'
   - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'
+  - 'view movie'

@@ -1,0 +1,8 @@
+name: 'Ritam&#039;s Custom Entity'
+type: module
+description: 'A module which provides custom entities.'
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:node
