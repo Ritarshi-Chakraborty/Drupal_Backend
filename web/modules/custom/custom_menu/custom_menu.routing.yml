@@ -1,0 +1,7 @@
+custom_menu.budget_form:
+  path: '/admin/budget'
+  defaults:
+    _form: Drupal\custom_menu\Form\BudgetForm
+    _title: Budget Form
+  requirements:
+    _role: administrator + content_editor
