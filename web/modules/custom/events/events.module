@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * This is the module file which defines all the hooks.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeInterface;
+use Drupal\events\Event\MovieBudgetEvent;
+
+/**
+ * Implements hook_entity_insert().
+ */
+function events_entity_insert(EntityInterface $entity) {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'movie') {
+    \Drupal::service('events.budget_subscriber')->onNodeSave($entity);
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function events_entity_update(EntityInterface $entity) {
+  if ($entity instanceof NodeInterface && $entity->bundle() === 'movie') {
+    $event = new MovieBudgetEvent($entity);
+    \Drupal::service('event_dispatcher')->dispatch($event, MovieBudgetEvent::EVENT_NAME);
+  }
+}
