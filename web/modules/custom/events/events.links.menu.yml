@@ -1,0 +1,6 @@
+events.budget:
+  title: Budget Form
+  description: Config form to store budget
+  route_name: events.budget_form
+  weight: 6
+  parent: system.admin

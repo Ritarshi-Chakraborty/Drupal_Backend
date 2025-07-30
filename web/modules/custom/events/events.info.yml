@@ -1,0 +1,6 @@
+name: Ritam's Events
+type: module
+description: 'A module which displays a budget message using Event subscribers.'
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11

@@ -1,0 +1,12 @@
+services:
+  events.budget_subscriber:
+    class: Drupal\events\EventSubscriber\BudgetSubscriber
+    arguments: ['@config.factory', '@messenger']
+    tags:
+      - { name: event_subscriber }
+
+  events.movie_budget_subscriber:
+    class: Drupal\events\EventSubscriber\MovieBudgetSubscriber
+    arguments: ['@config.factory', '@messenger']
+    tags:
+      - { name: event_subscriber }

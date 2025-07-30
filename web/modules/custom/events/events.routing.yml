@@ -1,0 +1,7 @@
+events.budget_form:
+  path: '/admin/budget'
+  defaults:
+    _form: Drupal\events\Form\BudgetForm
+    _title: Budget Form
+  requirements:
+    _role: administrator + content_editor
