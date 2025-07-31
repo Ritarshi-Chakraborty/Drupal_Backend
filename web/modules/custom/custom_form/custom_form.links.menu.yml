@@ -1,0 +1,6 @@
+custom_form.ConfigForm:
+  title: Config form 
+  description: This is my config form.
+  route_name: custom_form.ConfigForm
+  weight: 2
+  parent: system.admin_config_system
