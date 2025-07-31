@@ -1,4 +1,4 @@
-uuid: 508f89e3-ec3f-4a6e-bae0-87ba29f0b477
+uuid: b3e4d8e2-2532-4752-b28a-272d539e5923
 langcode: en
 status: true
 dependencies:
@@ -21,7 +21,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 101
     region: content
   field_budget:
     type: number_integer
@@ -30,22 +30,22 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 3
+    weight: 103
     region: content
   field_poster:
     type: image
-    label: hidden
+    label: above
     settings:
       image_link: ''
       image_style: ''
       image_loading:
         attribute: lazy
     third_party_settings: {  }
-    weight: 1
+    weight: 102
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 100
     region: content
 hidden: {  }

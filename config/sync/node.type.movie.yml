@@ -1,4 +1,4 @@
-uuid: d601d730-8990-4fff-88e6-b2b9175117e8
+uuid: 6c91d08c-e567-4ab0-a191-4b7eb74a2fa2
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ third_party_settings:
     parent: 'main:'
 name: Movie
 type: movie
-description: null
+description: 'A content type to store and display movie details, including title, budget, and poster.'
 help: null
 new_revision: true
 preview_mode: 1

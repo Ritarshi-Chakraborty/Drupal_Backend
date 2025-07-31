@@ -38,7 +38,7 @@ function custom_menu_node_view(array &$build, NodeInterface $node, $view_mode, $
 
       // Display the message on top of the node.
       $build['budget_message'] = [
-        '#markup' => Markup::create("<div style='padding: 1rem; background: #b3b3f7; font-size: 1.2rem;'>Budget Review: $message</div>"),
+        '#markup' => Markup::create("<div class='budget-review-message'>Budget Review: $message</div>"),
         '#weight' => 0,
       ];
     }
