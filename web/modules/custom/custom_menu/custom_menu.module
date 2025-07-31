@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Contains custom logic to display a budget comparison message.
+ *
+ * This hook implementation adds a budget message to nodes of type 'movie'
+ * based on a configured site-wide budget threshold. It compares the node's
+ * 'field_budget' value with the configured budget and displays whether the
+ * movie is under, over, or within budget.
+ */
+
+use Drupal\node\NodeInterface;
+use Drupal\Core\Render\Markup;
+
+/**
+ * Implements hook_node_view().
+ */
+function custom_menu_node_view(array &$build, NodeInterface $node, $view_mode, $langcode) {
+  // Check if the node is of content type 'movie'.
+  if ($node->bundle() == 'movie') {
+    $config = \Drupal::config('site_budget_config.settings');
+    $config_budget = $config->get('budget');
+
+    if ($node->hasField('field_budget') && !$node->get('field_budget')->isEmpty()) {
+      $node_budget = $node->get('field_budget')->value;
+
+      // Prepare the message based on comparison.
+      if ($node_budget < $config_budget) {
+        $message = t('The movie is under budget');
+      }
+      elseif ($node_budget > $config_budget) {
+        $message = t('The movie is over budget');
+      }
+      else {
+        $message = t('The movie is within budget');
+      }
+
+      // Display the message on top of the node.
+      $build['budget_message'] = [
+        '#markup' => Markup::create("<div class='budget-review-message'>Budget Review: $message</div>"),
+        '#weight' => 0,
+      ];
+    }
+  }
+}

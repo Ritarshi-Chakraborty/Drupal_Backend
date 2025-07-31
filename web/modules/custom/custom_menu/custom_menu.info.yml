@@ -1,0 +1,6 @@
+name: Ritam's Custom Menu
+type: module
+description: 'A module which provides custom menu link for a config form.'
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11

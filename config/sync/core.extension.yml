@@ -12,6 +12,7 @@ module:
   config: 0
   contact: 0
   contextual: 0
+  custom_menu: 0
   datetime: 0
   dblog: 0
   devel_generate: 0
@@ -47,4 +48,5 @@ module:
 theme:
   olivero: 0
   claro: 0
+  mytheme: 0
 profile: standard

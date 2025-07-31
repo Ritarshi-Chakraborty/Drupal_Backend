@@ -1,0 +1,23 @@
+uuid: 9199bf58-0f23-48b8-8dd6-a3cad191e55d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_budget
+    - node.type.movie
+id: node.movie.field_budget
+field_name: field_budget
+entity_type: node
+bundle: movie
+label: Budget
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ' Cr INR'
+field_type: integer

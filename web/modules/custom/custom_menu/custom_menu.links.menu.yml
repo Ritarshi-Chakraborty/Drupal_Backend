@@ -1,0 +1,6 @@
+custom_menu.budget:
+  title: Budget Form
+  description: Config form to store budget
+  route_name: custom_menu.budget_form
+  weight: 6
+  parent: system.admin
