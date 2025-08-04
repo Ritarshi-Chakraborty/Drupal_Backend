@@ -1,0 +1,6 @@
+name: Cache Test
+description: A custom module which implements caching.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11

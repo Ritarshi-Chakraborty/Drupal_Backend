@@ -1,0 +1,20 @@
+uuid: c2c2d375-ce34-4ede-8fb8-dc05fcf6e6d7
+langcode: en
+status: true
+dependencies:
+  module:
+    - cache_test
+  theme:
+    - olivero
+id: olivero_cacheblock
+theme: olivero
+region: sidebar
+weight: 0
+provider: null
+plugin: cache_block
+settings:
+  id: cache_block
+  label: 'Cache Block'
+  label_display: visible
+  provider: cache_test
+visibility: {  }

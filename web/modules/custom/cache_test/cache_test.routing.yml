@@ -1,0 +1,6 @@
+cache_test.index:
+  path: '/cache-demo'
+  defaults:
+    _controller: Drupal\cache_test\Controller\CacheController::caching
+  requirements:
+    _role: authenticated + anonymous
