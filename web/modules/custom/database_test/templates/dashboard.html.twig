@@ -1,0 +1,91 @@
+<style>
+
+h3 {
+  color: #054abe;
+}
+
+table {
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 4px 4px 1rem #0039ab;
+}
+
+table, th, td {
+  border: 2px solid #0575ff;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #5ce1ff;
+}
+
+th, td {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 1rem 3rem;
+}
+
+tr:hover {
+  background-color: #c7f5ff;
+}
+  
+</style>
+
+{# Yearly counts #}
+<h3>Yearly Event Counts</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Number of Events</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in yearly_counts %}
+      <tr>
+        <td>{{ row.year }}</td>
+        <td>{{ row.event_count }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{# Quarterly counts #}
+<h3>Quarterly Event Counts</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Quarter</th>
+      <th>Number of Events</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in quarterly_counts %}
+      <tr>
+        <td>{{ row.year }}</td>
+        <td>{{ row.quarter_month }}</td>
+        <td>{{ row.event_count }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{# Type counts #}
+<h3>Event Type Counts</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Event Type</th>
+      <th>Number of Events</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in type_counts %}
+      <tr>
+        <td>{{ row.term_name }}</td>
+        <td>{{ row.event_count }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
