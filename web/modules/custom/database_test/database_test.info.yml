@@ -1,0 +1,9 @@
+name: Database Test
+description: A custom module which implements Database API.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:node
+  - drupal:taxonomy

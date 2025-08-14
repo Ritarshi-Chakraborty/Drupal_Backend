@@ -1,0 +1,9 @@
+uuid: f9f352a9-a548-4b01-b2a2-9267be2767fe
+langcode: en
+status: true
+dependencies: {  }
+name: 'Event Type'
+vid: event_type
+description: 'Use event types to group events on similar types.'
+weight: 0
+new_revision: false

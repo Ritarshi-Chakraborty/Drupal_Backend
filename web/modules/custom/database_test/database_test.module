@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * The theme file of this custom module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function database_test_theme($existing, $type, $theme, $path) {
+  return [
+    'dashboard' => [
+      'variables' => [
+        'yearly_counts' => NULL,
+        'type_counts' => NULL,
+        'quarterly_counts' => NULL,
+      ],
+      'template' => 'dashboard',
+    ],
+  ];
+}

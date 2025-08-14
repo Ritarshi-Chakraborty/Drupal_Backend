@@ -1,0 +1,15 @@
+database_test.dashboard:
+  path: '/dashboard'
+  defaults:
+    _controller: Drupal\database_test\Controller\DashboardController::dashboard
+    _title: Event Dashboard
+  requirements:
+    _permission: access content
+
+database_test.form:
+  path: '/form'
+  defaults:
+    _form: Drupal\database_test\Form\TaxonomyForm
+    _title: Search Taxonomy Term
+  requirements:
+    _permission: access content
