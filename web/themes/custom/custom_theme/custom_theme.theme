@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * This is theme file of my custom theme.
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme_suggestions_node_alter().
+ */
+function custom_theme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $node = $variables['elements']['#node'];
+  if ($node instanceof NodeInterface) {
+    if ($node->getType() === 'article' && $node->id() == 1) {
+      $suggestions[] = 'node__' . $node->id();
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_block_alter().
+ */
+function custom_theme_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  $block_id = $variables['elements']['#id'];
+  if ($block_id == 'custom_theme_site_branding') {
+    $suggestions[] = 'block__system';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function custom_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Get current path.
+  $current_path = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
+  if ($alias === '/contact') {
+    $suggestions[] = 'page__contact';
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function custom_theme_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  if ($node->getType() == 'article') {
+    $variables['is_article'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function custom_theme_preprocess_page(&$variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
+  if ($alias === '/about') {
+    $variables['custom_message'] = "This message has been displayed using Preprocess hook.";
+  }
+}

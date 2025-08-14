@@ -1,0 +1,34 @@
+.main {
+  padding: 2rem 0;
+  background-color: #EDF4F2;
+}
+
+.main-content {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.breadcrumb-container {
+  background-color: #31473A;
+  padding: 0 2rem;
+}
+
+.page-header,
+.page-footer {
+  padding: 0rem 2rem;
+  background-color: #7C8363;
+}
+
+.page-footer {
+  padding: 2rem;
+  margin: 0;
+}
+
+.front-page-link {
+  padding: 0 2rem;
+}

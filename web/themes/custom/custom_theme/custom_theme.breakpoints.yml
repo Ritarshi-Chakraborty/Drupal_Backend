@@ -1,0 +1,14 @@
+custom_theme.mobile:
+  label: mobile
+  mediaQuery: 'all and (max-width: 599px)'
+  weight: 0
+
+custom_theme.tablet:
+  label: tablet
+  mediaQuery: 'all and (min-width: 600px) and (max-width: 999px)'
+  weight: 1
+
+custom_theme.desktop:
+  label: desktop
+  mediaQuery: 'all and (min-width: 1000px)'
+  weight: 2

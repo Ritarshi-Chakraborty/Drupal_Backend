@@ -1,0 +1,17 @@
+<header class="page-header">
+  <nav class="navbar">
+    <div class="header">{{ page.header }}</div>
+    <div>{{ page.primary_menu }}</div>
+    <div>{{ page.secondary_menu }}</div>
+  </nav>
+</header>
+<main class="main">
+  {% block main %}
+  <div class="breadcrumb-container">{{ page.breadcrumbs }}</div>
+  <div>{{ page.highlighted }}</div>
+  <marquee><h5>{{ custom_message }}</h5></marquee>
+  <section class="main-content">{{ page.content }}</section>
+  {% endblock %}
+  <a class="front-page-link" href={{ url('<front>') }}>Front Page</a>
+</main>
+<footer class="page-footer">{{ page.footer }}</footer>

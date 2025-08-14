@@ -1,0 +1,45 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+{{ attach_library('bootstrap5/node') }}
+<article{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {% if label and not page %}
+    <h2{{ title_attributes }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% if is_article %}
+    <marquee><h3>This is an article node.</h3></marquee>
+  {% endif %} 
+
+  {% if display_submitted %}
+    <footer class="node__meta">
+    {% block footer %}
+      {{ author_picture }}
+      <div{{ author_attributes.addClass('node__submitted') }}>
+        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+        {{ metadata }}
+      </div>
+    {% endblock %}
+    </footer>
+  {% endif %}
+
+  <div{{ content_attributes.addClass('node__content') }}>
+  {% block content %}
+    {{ content }}
+    {# {{ content.field_image }} #}
+  {% endblock %}
+  </div>
+
+</article>
