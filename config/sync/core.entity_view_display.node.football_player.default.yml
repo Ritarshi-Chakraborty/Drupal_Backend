@@ -1,0 +1,47 @@
+uuid: 17a064c5-695b-4fe9-9f81-cc0ff200ed38
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.football_player.field_age
+    - field.field.node.football_player.field_country
+    - field.field.node.football_player.field_team
+    - node.type.football_player
+  module:
+    - user
+id: node.football_player.default
+targetEntityType: node
+bundle: football_player
+mode: default
+content:
+  field_age:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_country:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_team:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

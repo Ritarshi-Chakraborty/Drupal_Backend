@@ -1,0 +1,18 @@
+uuid: 61958acf-a959-413f-8fb4-d22c19863b06
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.football_club
+id: node.football_club.title
+field_name: title
+entity_type: node
+bundle: football_club
+label: 'Club Name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,26 @@
+uuid: be7f40b6-49a0-429d-a75a-fa69b7a8e7b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.football_player.field_age
+    - field.field.node.football_player.field_country
+    - field.field.node.football_player.field_team
+    - node.type.football_player
+  module:
+    - user
+id: node.football_player.teaser
+targetEntityType: node
+bundle: football_player
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_age: true
+  field_country: true
+  field_team: true

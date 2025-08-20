@@ -1,0 +1,9 @@
+name: Ritam's Custom View
+description: A module which alters the Football view.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
+dependencies:
+  - views
+  - views_ui

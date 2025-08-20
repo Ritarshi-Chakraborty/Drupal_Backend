@@ -1,0 +1,18 @@
+uuid: 24b18a9c-0ef4-4985-af8b-045ae6288981
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.football_player
+id: node.football_player.title
+field_name: title
+entity_type: node
+bundle: football_player
+label: 'Player Name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
