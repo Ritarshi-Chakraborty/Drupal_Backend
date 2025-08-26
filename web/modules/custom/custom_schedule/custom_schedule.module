@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Implementing some hooks.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function custom_schedule_cron() {
+  $queue = \Drupal::queue('article_delete_queue');
+
+  // Find article nodes created before 5 days ago.
+  $timestamp_5_days_ago = \Drupal::time()->getRequestTime() - 5 * 24 * 60 * 60;
+
+  // Query to get node IDs of articles older than 5 days.
+  $nids = \Drupal::entityQuery('node')
+    ->condition('type', 'article')
+    ->condition('created', $timestamp_5_days_ago, '<')
+    ->condition('status', 1)
+    ->accessCheck(TRUE)
+    ->execute();
+
+  // Add each node ID to the queue.
+  foreach ($nids as $nid) {
+    $queue->createItem($nid);
+  }
+
+  // Process a limited number of items in the queue in this cron run.
+  $max_items = 5;
+  $count = 0;
+
+  while ($item = $queue->claimItem()) {
+    try {
+      \Drupal::service('plugin.manager.queue_worker')
+        ->createInstance('article_delete_queue')
+        ->processItem($item->data);
+
+      $queue->deleteItem($item);
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('custom_schedule')->error($e->getMessage());
+      $queue->releaseItem($item);
+    }
+
+    $count++;
+    if ($count >= $max_items) {
+      break;
+    }
+  }
+}
+
+
+
+
+
+// function custom_schedule_cron() {
+//   // Get timestamp for 5 days ago from now.
+//   $timestamp = strtotime('-5 days');
+
+//   // Query for article nodes created BEFORE that timestamp.
+//   $query = \Drupal::entityQuery('node')
+//     ->condition('type', 'article')
+//     ->condition('created', $timestamp, '<')
+//     ->accessCheck(TRUE);
+
+//   $nids = $query->execute();
+
+//   if (!empty($nids)) {
+//     $nodes = Node::loadMultiple($nids);
+
+//     foreach ($nodes as $node) {
+//       $nid = $node->id();
+//       $title = $node->getTitle();
+//       $node->delete();
+//       // Log individual node deletion with title and nid.
+//       \Drupal::logger('custom_schedule')->notice(
+//         'Deleted article node: "@title" (NID: @nid)',
+//         [
+//           '@title' => $title,
+//           '@nid' => $nid,
+//         ]
+//       );
+//     }
+
+//     \Drupal::logger('custom_schedule')->notice('Deleted ' . count($nodes) . ' article node(s) older than 5 days.');
+//   }
+// }

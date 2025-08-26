@@ -1,0 +1,6 @@
+name: Custom Schedule
+description: Module which schedule tasks.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
