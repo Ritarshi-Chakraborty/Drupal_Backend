@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * @file
+ * This is the module file of `event_speaker` custom module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Ajax\AjaxRequest;
+
+/**
+ * Implements hook_webform_submission_form_alter().
+ */
+function event_speaker_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  // Check for a specific webform ID.
+  if ($form['#webform_id'] === 'event_registration') {
+    // Check if the field exists.
+    if (isset($form['elements']['node_url'])) {
+      // Disable the field.
+      $form['elements']['node_url']['#disabled'] = TRUE;
+      // Get the current URL.
+      $current_url = \Drupal::request()->getUri();
+      // Set the default value.
+      $form['elements']['node_url']['#default_value'] = $current_url;
+    }
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function event_speaker_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'event') {
+    // Get the node id.
+    $node_id = $entity->id();
+    // Get current formatted date.
+    $current_time = \Drupal::time()->getCurrentTime();
+    $date_today = \Drupal::service('date.formatter')->format($current_time, 'custom', 'Y-m-d');
+    // Get timestamp for tomorrow 00:00 (i.e. exclude today) and format it.
+    $start_of_tomorrow = strtotime('tomorrow');
+    $date_tomorrow = \Drupal::service('date.formatter')->format($start_of_tomorrow, 'custom', 'Y-m-d');
+
+    // Build the query and execute it.
+    $query = Drupal::entityQuery('node')
+      ->condition('type', 'event')
+      ->condition('nid', $node_id, '!=')
+      ->condition('field_start_date', $date_tomorrow, '>=')
+      ->sort('field_start_date', 'DESC')
+      ->accessCheck(TRUE);
+    $nid_list = $query->execute();
+
+    if (!empty($nid_list)) {
+      $nodes = Node::loadMultiple($nid_list);
+      $items = [];
+      foreach ($nodes as $node) {
+        $items[] = [
+          '#type' => 'link',
+          '#title' => $node->label(),
+          '#url' => $node->toUrl(),
+        ];
+      }
+      $build['upcoming_events'] = [
+        '#theme' => 'item_list',
+        '#title' => t('Upcoming Events'),
+        '#items' => $items,
+        '#weight' => 1000,
+      ];
+    }
+    // Retrieve the date from the datetime.
+    $datetime_item = $entity->field_start_date->first();
+    $drupalDateTime = new DrupalDateTime($datetime_item->value);
+    $formatted_date = $drupalDateTime->format('Y-m-d');
+  }
+}
+
+
+
+
+
+
+// /**
+//  * Implements hook_form_alter().
+//  */
+// function event_speaker_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+//   // Validate for both add & edit form.
+//   if ($form_id === 'node_event_form' || $form_id === 'node_event_edit_form') {
+//     // Attach validation only to the actual submit button
+//     if (isset($form['actions']['submit'])) {
+//       $form['actions']['submit']['#validate'][] = 'event_speaker_custom_validate';
+//     }
+//   }
+// }
+
+// /**
+//  * Function which prevents form submission and displays an error message.
+//  *
+//  * @param array $form
+//  * @param FormStateInterface $form_state
+//  * @return void
+//  */
+// function event_speaker_custom_validate(array &$form, FormStateInterface $form_state) {
+//   $start_date = $form_state->getValue('field_start_date');
+//   $end_date = $form_state->getValue('field_end_date');
+//   // Proceed further if both the fields are non-empty.
+//   if (is_array($start_date) && !empty($start_date[0]['value']) && is_array($end_date) && !empty($end_date[0]['value'])) {
+//     try {
+//       $start = new \DateTime($start_date[0]['value']);
+//       $end = new \DateTime($end_date[0]['value']);
+
+//       if ($end < $start) {
+//         // Prevent form submission.
+//         $form_state->setErrorByName('field_end_date', t('End date cannot be earlier than Start date.'));
+//       }
+//     } 
+//     catch (\Exception $e) {
+//       \Drupal::logger('event_speaker')->error('Date parsing failed: @message', ['@message' => $e->getMessage()]);
+//     }
+//   }
+// }

@@ -1,0 +1,17 @@
+event_speaker.api:
+  path: /custom-api
+  defaults:
+    _controller: Drupal\event_speaker\Controller\CustomApiController::getAllNodes
+    _title: All Nodes
+  requirements:
+    _role: administrator
+
+event_speaker.api-form:
+  path: /admin/config/api-form
+  defaults:
+    _form: Drupal\event_speaker\Form\ApiKeyForm
+    _title: API Form
+  requirements:
+    _permission: administer site configuration
+  options:
+    _admin_route: TRUE

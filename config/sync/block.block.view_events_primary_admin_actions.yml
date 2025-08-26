@@ -1,0 +1,20 @@
+uuid: 7a38b6d8-1981-4b9c-88d9-13d2eec67441
+langcode: en
+status: true
+dependencies:
+  theme:
+    - view_events
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: view_events_primary_admin_actions
+theme: view_events
+region: highlighted
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

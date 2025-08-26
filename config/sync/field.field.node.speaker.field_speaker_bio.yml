@@ -1,0 +1,19 @@
+uuid: 939379af-fbfe-4348-978f-1b9644597487
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_speaker_bio
+    - node.type.speaker
+id: node.speaker.field_speaker_bio
+field_name: field_speaker_bio
+entity_type: node
+bundle: speaker
+label: 'Speaker Bio'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

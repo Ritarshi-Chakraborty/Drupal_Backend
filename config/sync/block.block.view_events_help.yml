@@ -1,0 +1,22 @@
+uuid: 8f04e4e4-96da-4a68-803c-ea38987b98f3
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - view_events
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: view_events_help
+theme: view_events
+region: header
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

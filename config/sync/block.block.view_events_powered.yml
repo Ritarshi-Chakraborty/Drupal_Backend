@@ -1,0 +1,22 @@
+uuid: d9f185ff-3829-4ee7-9a8a-0356b09cc07a
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - view_events
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: view_events_powered
+theme: view_events
+region: header
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

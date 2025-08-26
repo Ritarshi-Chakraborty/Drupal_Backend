@@ -1,0 +1,23 @@
+uuid: d9c226b5-52d1-43b0-8683-7fa6b3636173
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - view_events
+_core:
+  default_config_hash: imMyHD6LYci0gtXq56qr9ZKGHzbEG9uFydrN5EhKtSU
+id: view_events_search_form_wide
+theme: view_events
+region: secondary_menu
+weight: -5
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (wide)'
+  label_display: '0'
+  provider: search
+  page_id: ''
+visibility: {  }

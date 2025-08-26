@@ -1,0 +1,9 @@
+name: Event Speaker
+description: Provides the details of Events and Speakers.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
+dependencies:
+  - webform
+  - webform_ui

@@ -1,0 +1,6 @@
+custom_form.ConfigForm:
+  title: API Form 
+  description: This is the form to store the site API key.
+  route_name: event_speaker.api-form
+  weight: 2
+  parent: system.admin_config

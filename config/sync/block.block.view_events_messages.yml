@@ -1,0 +1,22 @@
+uuid: 8c22cd23-9632-4c57-b155-4d120e08aa7e
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - view_events
+_core:
+  default_config_hash: BZ5tpW7H8X4PVGRm3MImTIHd2tN0eF7zOtp4SpRYUA0
+id: view_events_messages
+theme: view_events
+region: highlighted
+weight: -5
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

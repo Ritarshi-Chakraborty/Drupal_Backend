@@ -1,0 +1,22 @@
+uuid: 9d3d646b-29bb-4646-9e18-2fc42810c6a3
+langcode: en
+status: true
+dependencies:
+  theme:
+    - view_events
+_core:
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
+id: view_events_primary_local_tasks
+theme: view_events
+region: highlighted
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }
