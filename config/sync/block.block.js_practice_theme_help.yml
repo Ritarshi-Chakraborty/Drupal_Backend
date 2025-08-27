@@ -1,0 +1,22 @@
+uuid: a6a57f0e-6537-4b31-9feb-141d0c50dc2b
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - js_practice_theme
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: js_practice_theme_help
+theme: js_practice_theme
+region: header
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

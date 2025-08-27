@@ -1,0 +1,22 @@
+uuid: 4016e013-317d-4d21-98c3-516876d90120
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - js_practice_theme
+_core:
+  default_config_hash: VhBzWb7lMRtIOg9G7VSw_0uopi-7zXeHq4vXqqV1HFE
+id: js_practice_theme_breadcrumbs
+theme: js_practice_theme
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

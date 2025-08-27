@@ -1,0 +1,20 @@
+uuid: 03f31d38-6961-4527-b3eb-7a5dae4ed570
+langcode: en
+status: false
+dependencies:
+  theme:
+    - js_practice_theme
+_core:
+  default_config_hash: 6aOgWsNTXjqrDm98TXSAjP6qd2nCijD1xw45MrnbK-Y
+id: js_practice_theme_page_title
+theme: js_practice_theme
+region: header
+weight: -5
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

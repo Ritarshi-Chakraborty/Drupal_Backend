@@ -1,0 +1,22 @@
+uuid: 7ce7bb1b-72d8-46cc-9623-c74fc9a9e98f
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - js_practice_theme
+_core:
+  default_config_hash: BZ5tpW7H8X4PVGRm3MImTIHd2tN0eF7zOtp4SpRYUA0
+id: js_practice_theme_messages
+theme: js_practice_theme
+region: highlighted
+weight: -5
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -47,4 +47,5 @@ module:
 theme:
   olivero: 0
   claro: 0
+  js_practice_theme: 0
 profile: standard
