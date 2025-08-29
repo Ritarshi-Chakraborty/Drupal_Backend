@@ -4,14 +4,17 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
+    - node.type.ticket
   module:
     - comment
     - contact
     - file
     - filter
+    - node
     - search
     - shortcut
     - system
+    - ticket_api
 _core:
   default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
 id: authenticated
@@ -23,7 +26,10 @@ permissions:
   - 'access content'
   - 'access shortcuts'
   - 'access site-wide contact form'
+  - 'access tickets api'
+  - 'create ticket content'
   - 'delete own files'
+  - 'edit any ticket content'
   - 'post comments'
   - 'search content'
   - 'skip comment approval'

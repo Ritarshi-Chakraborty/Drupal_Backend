@@ -1,0 +1,30 @@
+uuid: 3d9963e3-2832-43b5-bef0-7dfb10071d65
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ticket.field_assigned_to
+    - field.field.node.ticket.field_description
+    - field.field.node.ticket.field_priority
+    - field.field.node.ticket.field_reporter_email
+    - field.field.node.ticket.field_status
+    - node.type.ticket
+  module:
+    - user
+id: node.ticket.teaser
+targetEntityType: node
+bundle: ticket
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_assigned_to: true
+  field_description: true
+  field_priority: true
+  field_reporter_email: true
+  field_status: true

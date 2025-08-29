@@ -1,0 +1,19 @@
+uuid: 373ffab7-1161-4382-9930-dd0669b0446d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_reporter_email
+    - node.type.ticket
+id: node.ticket.field_reporter_email
+field_name: field_reporter_email
+entity_type: node
+bundle: ticket
+label: 'Reporter Email'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

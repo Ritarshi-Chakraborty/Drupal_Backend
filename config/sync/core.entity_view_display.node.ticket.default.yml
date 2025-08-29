@@ -1,0 +1,61 @@
+uuid: 240eb55a-cd96-412c-a227-247252033a1e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ticket.field_assigned_to
+    - field.field.node.ticket.field_description
+    - field.field.node.ticket.field_priority
+    - field.field.node.ticket.field_reporter_email
+    - field.field.node.ticket.field_status
+    - node.type.ticket
+  module:
+    - options
+    - user
+id: node.ticket.default
+targetEntityType: node
+bundle: ticket
+mode: default
+content:
+  field_assigned_to:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_priority:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_reporter_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }
