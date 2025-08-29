@@ -1,0 +1,6 @@
+ticket_api.export_link:
+  title: 'Export Content'
+  description: 'Export all nodes using batch process.'
+  route_name: ticket_api.content_export
+  parent: system.admin_content
+  weight: 100

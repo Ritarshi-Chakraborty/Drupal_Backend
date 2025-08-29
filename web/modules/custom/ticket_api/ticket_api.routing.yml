@@ -1,0 +1,53 @@
+ticket_api.ticket_list:
+  path: /api/v1/tickets
+  defaults:
+    _controller: Drupal\ticket_api\Controller\TicketsApiController::getList
+    _format: json
+  requirements:
+    _permission: 'access tickets api'
+  methods: [GET]
+
+ticket_api.ticket_detail:
+  path: /api/v1/tickets/{id}
+  defaults:
+    _controller: Drupal\ticket_api\Controller\TicketsApiController::getDetail
+    _format: json
+  requirements:
+    _permission: 'access tickets api'
+    id: '\d+'
+  methods: [GET]
+
+ticket_api.ticket_create:
+  path: /api/v1/tickets/create
+  defaults:
+    _controller: Drupal\ticket_api\Controller\TicketsApiController::createTicket
+    _format: json
+  requirements:
+    _permission: 'manage tickets via api'
+  methods: [POST]
+
+ticket_api.update_status:
+  path: /api/v1/tickets/{id}/status
+  defaults:
+    _controller: Drupal\ticket_api\Controller\TicketsApiController::updateStatus
+    _format: json
+  requirements:
+    _permission: 'manage tickets via api'
+    id: '\d+'
+  methods: [PATCH]
+
+ticket_api.export_form:
+  path: '/admin/content/export-ticket'
+  defaults:
+    _form: 'Drupal\ticket_api\Form\TicketExportForm'
+    _title: 'Export Tickets'
+  requirements:
+    _permission: 'administer nodes'
+
+ticket_api.content_export:
+  path: '/admin/content/export'
+  defaults:
+    _controller: 'Drupal\ticket_api\Controller\ExportContentBatchController::export'
+    _title: 'Export Content Batch'
+  requirements:
+    _permission: 'administer site configuration'

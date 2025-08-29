@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * @file
+ * Some hooks are implemented in this file.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function ticket_api_entity_presave(EntityInterface $entity) {
+  // Only act on 'ticket' nodes.
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'ticket') {
+    // Normalize title: trim whitespace.
+    $title = $entity->getTitle();
+    $entity->setTitle(trim($title));
+
+    // Normalize email: lowercase.
+    if ($entity->hasField('field_reporter_email') && !$entity->get('field_reporter_email')->isEmpty()) {
+      $email = $entity->get('field_reporter_email')->value;
+      $entity->set('field_reporter_email', strtolower(trim($email)));
+    }
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function ticket_api_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'ticket' && $view_mode === 'full') {
+    $build['ticket_api_disclaimer'] = [
+      '#type' => 'markup',
+      '#markup' => Markup::create('<div class="ticket-api-disclaimer" style="font-size: 2rem;"><em>Disclaimer: This ticket was generated via the API.</em></div>'),
+      '#weight' => 1000,
+    ];
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function ticket_api_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.ticket_api':
+      return t('
+        <h2>Ticket API Module</h2>
+        <p>This module provides a REST-like API for managing ticket content types.</p>
+
+        <h3>Available Endpoints</h3>
+        <ul>
+          <li><strong>GET /api/v1/tickets</strong> – List tickets (paginated). Requires <em>access tickets api</em> permission.</li>
+          <li><strong>GET /api/v1/tickets/{id}</strong> – Get ticket details. Requires <em>access tickets api</em> permission.</li>
+          <li><strong>POST /api/v1/tickets</strong> – Create a new ticket. Requires <em>manage tickets via api</em> permission or valid API key.</li>
+          <li><strong>PATCH /api/v1/tickets/{id}/status</strong> – Update ticket status. Requires <em>manage tickets via api</em> permission or valid API key.</li>
+        </ul>
+
+        <h3>Authentication</h3>
+        <p>Mutating operations (POST, PATCH) require either:</p>
+        <ul>
+          <li>Authenticated Drupal user with proper permission.</li>
+          <li>Or a valid API key via <code>X-API-Key</code> HTTP header.</li>
+        </ul>
+
+        <h3>Cache Tags</h3>
+        <ul>
+          <li>List responses tagged with <code>ticket_list</code>.</li>
+          <li>Single ticket responses tagged with <code>node:{id}</code>.</li>
+          <li>Mutations invalidate relevant cache tags.</li>
+        </ul>
+      ');
+  }
+}

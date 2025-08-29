@@ -1,0 +1,6 @@
+name: Ticket API Module
+description: Module which exposes a JSON API containing the ticket details.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11

@@ -1,0 +1,7 @@
+access tickets api:
+  title: 'Access tickets API (read-only)'
+  description: 'Allows access to ticket listing and detail endpoints.'
+
+manage tickets via api:
+  title: 'Manage tickets via API (create/update)'
+  description: 'Allows creating or updating tickets through the API.'
