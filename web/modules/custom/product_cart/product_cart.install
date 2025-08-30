@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Schema has been created using this install file.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function product_cart_schema() {
+  $schema['cart_product'] = [
+    'description' => 'Maps users to product content with timestamp.',
+    'fields' => [
+      'product' => [
+        'description' => 'The node ID of the product content.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'user' => [
+        'description' => 'The user ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'description' => 'The Unix timestamp when the mapping was created.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['product', 'user'],
+    'indexes' => [
+      'user' => ['user'],
+      'created' => ['created'],
+    ],
+    'foreign keys' => [
+      'fk_product_node' => [
+        'table' => 'node',
+        'columns' => ['product' => 'nid'],
+      ],
+      'fk_user' => [
+        'table' => 'users_field_data',
+        'columns' => ['user' => 'uid'],
+      ],
+    ],
+  ];
+
+  return $schema;
+}

@@ -1,0 +1,24 @@
+product_cart.products:
+  path: '/product-list'
+  defaults:
+    _controller: Drupal\product_cart\Controller\ProductApiController::productList
+    _format: json
+  requirements:
+    _permission: 'access tickets api'
+  methods: [GET]
+
+product_cart.buy_now:
+  path: '/buy-now'
+  defaults:
+    _controller: '\Drupal\product_cart\Controller\BuyNowController::buyNow'
+    _title: 'Processing Purchase'
+  requirements:
+    _permission: 'acess content'
+
+product_cart.thank_you:
+  path: '/thank-you'
+  defaults:
+    _controller: '\Drupal\product_cart\Controller\ThankYouController::thankYou'
+    _title: 'Thank You'
+  requirements:
+    _permission: 'access content'

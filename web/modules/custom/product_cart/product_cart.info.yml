@@ -1,0 +1,8 @@
+name: Product Cart
+description: Module which provies the feature of buying and adding products to cart.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
+dependencies:
+  - expand_collapse_formatter

@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Some hooks are implemented in this module file.
+ */
+
+use Drupal\Core\Url;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Implements hook_node_view().
+ */
+function product_cart_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'product') {
+    // Only add on full node view (not teaser or others).
+    if ($view_mode === 'full' && \Drupal::currentUser()->isAuthenticated()) {
+
+      $build['add_to_cart'] = [
+        '#type' => 'container',
+        '#weight' => 100,
+        'form' => \Drupal::formBuilder()->getForm('Drupal\product_cart\Form\AddToCartForm', $entity->id()),
+        '#access' => TRUE,
+      ];
+
+      // Buy Now Link.
+      $buy_now_url = Url::fromRoute('product_cart.buy_now', [], [
+        'query' => ['product' => $entity->id()],
+      ]);
+      $build['buy_now_link'] = [
+        '#type' => 'link',
+        '#title' => t('Buy Now'),
+        '#url' => $buy_now_url,
+        '#attributes' => ['class' => ['button', 'buy-now-button']],
+        '#weight' => 101,
+      ];
+    }
+  }
+}

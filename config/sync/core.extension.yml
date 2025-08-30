@@ -17,6 +17,7 @@ module:
   devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
+  expand_collapse_formatter: 0
   field: 0
   field_ui: 0
   file: 0
@@ -33,11 +34,13 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  product_cart: 0
   search: 0
   shortcut: 0
   system: 0
   taxonomy: 0
   text: 0
+  token: 0
   toolbar: 0
   update: 0
   user: 0
