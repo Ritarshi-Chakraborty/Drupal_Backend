@@ -1,0 +1,37 @@
+blogs.config_form:
+  path: '/admin/config/blogs'
+  defaults:
+    _form: 'Drupal\blogs\Form\BlogConfigForm'
+    _title: 'Blog API Configurations'
+  requirements:
+    _permission: 'administer nodes'
+  options:
+    _admin_route: TRUE
+
+blogs.blog-list:
+  path: /blog-list
+  defaults:
+    _controller: Drupal\blogs\Controller\BlogApiController::getBlogs
+    _title: Blog List
+  requirements:
+    _permission: access content
+
+blogs.like:
+  path: '/blog/like/{id}'
+  defaults:
+    _controller: Drupal\blogs\Controller\LikeDislikeController::like
+    _format: json
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  methods: [POST]
+
+blogs.dislike:
+  path: '/blog/dislike/{id}'
+  defaults:
+    _controller: Drupal\blogs\Controller\LikeDislikeController::dislike
+    _format: json
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  methods: [POST]

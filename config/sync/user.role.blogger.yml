@@ -1,0 +1,19 @@
+uuid: 3477337b-99a5-4f75-818c-b28c2b47e657
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.blog
+    - taxonomy.vocabulary.tags
+  module:
+    - node
+    - taxonomy
+id: blogger
+label: Blogger
+weight: 4
+is_admin: null
+permissions:
+  - 'create blog content'
+  - 'create terms in tags'
+  - 'delete own blog content'
+  - 'edit own blog content'

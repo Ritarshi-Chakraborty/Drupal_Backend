@@ -1,0 +1,8 @@
+name: Style Blog
+type: theme
+description: Custom theme to display blog nodes.
+base theme: olivero
+core_version_requirement: ^10 || ^11
+
+libraries:
+  - style_blog/global-scripting

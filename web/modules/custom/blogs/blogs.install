@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function blogs_schema() {
+  // Table which stores the like and dislike count of blogs.
+  $schema['node__like_dislike_count'] = [
+    'description' => 'Stores the like & dislike count of blogs.',
+    'fields' => [
+      'blog' => [
+        'description' => 'The node id of blogs.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'user' => [
+        'description' => 'The node id of users.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'like_status' => [
+        'description' => 'The number of likes.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+        'default' => 0,
+      ],
+      'dislike_status' => [
+        'description' => 'The number of dislikes.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['blog', 'user'],
+    'foreign keys' => [
+      'fk_blog' => [
+        'table' => 'node',
+        'columns' => ['blog' => 'nid'],
+        'on delete' => 'CASCADE',
+      ],
+      'fk_user' => [
+        'table' => 'users_field_data',
+        'columns' => ['user' => 'uid'],
+        'on delete' => 'CASCADE',
+      ],
+    ],
+  ];
+
+  // Table which stores the registration otp.
+  $schema['registration_otp'] = [
+    'description' => 'Stores OTPs sent to user emails during registration.',
+    'fields' => [
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'User email address.',
+      ],
+      'otp' => [
+        'type' => 'int',
+        'length' => 6,
+        'not null' => TRUE,
+        'description' => 'One-time password sent to the user.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Timestamp when the OTP was sent to the user.',
+      ],
+    ],
+    'primary key' => ['email'],
+  ];
+
+  return $schema;
+}

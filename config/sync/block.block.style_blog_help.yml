@@ -1,0 +1,22 @@
+uuid: 12f88972-f692-410c-b6bd-98e3c612618a
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - style_blog
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: style_blog_help
+theme: style_blog
+region: sidebar_first
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

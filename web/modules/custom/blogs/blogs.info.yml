@@ -1,0 +1,8 @@
+name: Blogs
+description: Module which provides the proper management of Blogs.
+type: module
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10 || ^11
+dependencies:
+  - select_registration_roles

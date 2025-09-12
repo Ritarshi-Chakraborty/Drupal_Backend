@@ -1,0 +1,18 @@
+uuid: baec73a9-ae68-4d15-bbf2-9fc31c7508ec
+langcode: en
+status: true
+dependencies:
+  theme:
+    - style_blog
+id: style_blog_pagetitle
+theme: style_blog
+region: content
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

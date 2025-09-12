@@ -1,0 +1,20 @@
+uuid: ed51ebe5-d4c5-48ad-b2eb-692565f496e2
+langcode: en
+status: true
+dependencies:
+  theme:
+    - style_blog
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: style_blog_primary_admin_actions
+theme: style_blog
+region: highlighted
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

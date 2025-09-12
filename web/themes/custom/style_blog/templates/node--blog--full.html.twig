@@ -1,0 +1,100 @@
+{% set layout = layout ? 'layout--' ~ layout|clean_class %}
+
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    layout ? 'grid-full',
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+  <header class="{{ layout }}">
+    {{ title_prefix }}
+      {% if label and not page %}
+      <h2{{ title_attributes.addClass('node__title') }}>
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+    {% endif %}
+    {{ title_suffix }}
+    {% if display_submitted %}
+      <div class="node__meta">
+      {% if author_picture %}
+        <div class="node__author-image">
+          {{ author_picture }}
+        </div>
+      {% endif %}
+        <span{{ author_attributes }}>
+          {{ 'By'|t }} {% apply spaceless %}{{ author_name }}{% endapply %}, {{ date }}
+        </span>
+        {{ metadata }}
+      </div>
+    {% endif %}
+  </header>
+  <div{{ content_attributes.addClass('node__content', layout) }}>
+
+    {# Get the first 50 words of the body. #}
+    {%
+      set words = node.field_body.value|striptags|split(' ')
+    %}
+
+    {# Show a toggle button if more than 50 words. #}
+    {% if words|length >= 50 %}
+      <div class="field field__body--toggle">
+        <div class="field__body--short">
+          <div class="field__label">{{ 'Body'|t }}</div>
+          {{ words[:50]|join(' ') }}....
+          <button class="button--toggle" type="button" data-target="{{ node.id() }}">Read More</button>
+        </div>
+
+        <div class="field__body--long" style="display: none;">
+          <div class="field__label">{{ 'Body'|t }}</div>
+          {{ node.field_body.value|raw }}
+          <button class="button--toggle" type="button" data-target="{{ node.id() }}">Show Less</button>
+        </div>
+      </div>
+    {% else %}
+      {# Show full body only if less than 50 words #}
+      <div class="field__body--no--toggle">
+        {{ content.field_body }}
+      </div>
+    {% endif %}
+    
+    {# Display the tags. #}
+    {{ content.field_blog_tags }}
+
+    <div class="field field__blog__metadata">
+      {# Display the published time #}
+      <div class="field__label">{{ 'Published Time'|t }}</div>
+      {{ node.created.value|date('F j, Y \\a\\t g:i A') }}
+      {# Display the author name #}
+      <div class="field__label">{{ 'Author Name'|t }}</div>
+      {{ node.uid.entity.name.value }}
+    </div>
+
+    {# Like & Dislike #}
+    <div class="field__like_dislike">
+      {# Like button & count. #}
+      <div class="field__like">
+        <button class="button__like" data-nid="{{ node.id() }}">Like 👍</button>
+        <p><span class="like_count">{{ content.likes_count }}</span> likes</p>
+      </div>
+      {# Dislike button & count. #}
+      <div class="field__dislike">
+        <button class="button__dislike" data-nid="{{ node.id() }}">Disike 👎</button>
+        <p><span class="dislike_count">{{ content.dislikes_count }}</span> dislikes</p>
+      </div>
+      {# Custom message #}
+      <div class="message__like_dislike" aria-live="polite"></div>
+    </div>
+
+  </div>
+  {% if content.comment %}
+    <div id="comments" class="{{ layout }}">
+      {{ content.comment }}
+    </div>
+  {% endif %}
+</article>

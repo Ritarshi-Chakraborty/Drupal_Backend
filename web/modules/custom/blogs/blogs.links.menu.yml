@@ -1,0 +1,13 @@
+blogs.form-link:
+  title: Blog API 
+  description: This is the form to store Blogs API configurations.
+  route_name: blogs.config_form
+  weight: 100
+  parent: system.admin_config
+
+blogs.list-link:
+  title: Blog List 
+  description: A JSON response containing the details of the blogs.
+  route_name: blogs.blog-list
+  weight: 100
+  parent: system.admin_content

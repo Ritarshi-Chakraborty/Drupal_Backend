@@ -1,0 +1,341 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\user\Entity\User;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Database\Database;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+
+/**
+ * Implements hook_preprocess_page_title().
+ */
+function blogs_preprocess_page_title(&$variables) {
+  // Check if the current route is the user registration page.
+  if (\Drupal::routeMatch()->getRouteName() == 'user.register') {
+    // Set the new title for the registration form.
+    $variables['title'] = t('Become An Author');  
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function blogs_form_user_register_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  // Change label and remove default description.
+  $form['account']['name']['#title'] = t('Full Name');
+  $form['account']['name']['#description'] = '';
+
+  // Container to display OTP status message.
+  $form['account']['otp_message'] = [
+    '#type' => 'container',
+    '#attributes' => ['id' => 'otp-message'],
+    '#weight' => -100
+  ];
+
+  // Send OTP button.
+  $form['account']['send_otp'] = [
+    '#type' => 'button',
+    '#value' => t('Send OTP'),
+    '#ajax' => [
+      'callback' => 'blogs_send_registration_otp',
+    ],
+    // Only validate the email field.
+    '#limit_validation_errors' => [['account', 'mail']],
+  ];
+
+  // OTP field.
+  $form['account']['otp'] = [
+    '#type' => 'number',
+    '#title' => t('Enter the OTP'),
+    '#description' => t('Enter a 6-digit number.'),
+  ];
+
+  // Attach custom validation handler.
+  $form['#validate'][] = 'blogs_validate_register_form';
+}
+
+/**
+ * Validates the user registration form.
+ *
+ * @param array &$form
+ *   The form array structure.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function blogs_validate_register_form(array &$form, FormStateInterface $form_state) {
+  // Validate such that the username contains only alphabetic characters and spaces.
+  $username = $form_state->getValue('name');
+  if (!preg_match('/^[a-zA-Z ]+$/', $username)) {
+    $form_state->setErrorByName('name', t('The username may only contain letters and spaces.'));
+  }
+
+  // Get the email and otp which has been entered.
+  $email = $form_state->getValue('mail');
+  $entered_otp = $form_state->getValue('otp');
+
+  // Check if the otp field is empty.
+  if (!$entered_otp) {
+    $form_state->setErrorByName('otp', t('OTP field cannot be empty!'));
+    return;
+  }
+
+  // Fetch the stored OTP from database.
+  $connection = Database::getConnection();
+  $record = $connection->select('registration_otp', 'r')
+    ->fields('r', ['otp', 'created'])
+    ->condition('email', $email)
+    ->execute()
+    ->fetchAssoc();
+
+  // Check for expiry — 10 minutes (600 seconds).
+  $now = \Drupal::time()->getCurrentTime();
+  $expiry = 600;
+
+  if (!$record) {
+    $form_state->setErrorByName('mail', t('No OTP found for this email. Please request a new one!'));
+    return;
+  }
+  elseif (($now - $record['created']) > $expiry) {
+    $form_state->setErrorByName('mail', t('The OTP has expired for this email. Please request a new one!'));
+    return;
+  }
+  elseif ($record['otp'] != $entered_otp) {
+    $form_state->setErrorByName('otp', t('The OTP entered is incorrect. Please try again!'));
+    return;
+  }
+
+  // OTP is valid: delete it after successful validation.
+  $connection->delete('registration_otp')
+    ->condition('email', $email)
+    ->execute();
+}
+
+/**
+ * AJAX callback to send a registration OTP to the inputted email address.
+ *
+ * @param array $form
+ *   The form structure.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ *
+ * @return \Drupal\Core\Ajax\AjaxResponse
+ *   An Ajax response containing rendered status messages.
+ */
+function blogs_send_registration_otp(array &$form, FormStateInterface $form_state) {
+  $response = new AjaxResponse();
+
+  // Get the email value and the email validator service.
+  $email = $form_state->getValue('mail');
+  $emailValidator = \Drupal::service('email.validator');
+
+  // Check if the email field is empty.
+  if (!$email) {
+    \Drupal::messenger()->addError(t('Please enter an email.'));
+  }
+  // Validate the email format.
+  elseif (!$emailValidator->isValid($email)) {
+    \Drupal::messenger()->addError(t('Please enter a valid email address.'));
+  }
+  // Check if email is already registered.
+  elseif (user_email_exists($email)) {
+    \Drupal::messenger()->addError(t('This email is already registered. Please use a different one!'));
+  }
+  else {
+    // Generate a 6-digit random OTP.
+    $otp = rand(100000, 999999);
+
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'blogs';
+    $key = 'registration_otp';
+    $langcode = \Drupal::currentUser()->getPreferredLangcode();
+
+    $params = [];
+    $params['subject'] = 'Registration OTP';
+    $params['message'] = <<<EOT
+
+    Your one-time password is $otp.
+
+    This OTP is valid for only 10 minutes.
+    EOT;
+
+    // Send mail
+    $result = $mailManager->mail($module, $key, $email, $langcode, $params, NULL, TRUE);
+
+    if ($result['result'] !== true) {
+      \Drupal::messenger()->addError(t('There was a problem sending your OTP. Please try again!'));
+    }
+    else {
+      // Get the database connection.
+      $connection = Database::getConnection();
+      // Delete existing OTP for this email.
+      $connection->delete('registration_otp')
+        ->condition('email', $email)
+        ->execute();
+
+      // Insert new OTP.
+      $connection->insert('registration_otp')
+        ->fields([
+          'email' => $email,
+          'otp' => (int) $otp,
+          'created' => \Drupal::time()->getCurrentTime(),
+        ])
+        ->execute();
+
+      \Drupal::messenger()->addMessage(t('OTP sent successfully to @mail.', ['@mail' => $email]));
+    }
+  }
+  // Render messages and attach to response.
+  $messages = ['#type' => 'status_messages'];
+  $messages_rendered = \Drupal::service('renderer')->renderRoot($messages);
+
+  $response->addCommand(new HtmlCommand('#otp-message', $messages_rendered));
+  return $response;
+}
+
+/**
+ * Checks if a user account with the given email address exists.
+ *
+ * @param string $email
+ *   The email address to check.
+ *
+ * @return bool
+ *   TRUE if a user with the given email exists, FALSE otherwise.
+ */
+function user_email_exists($email) {
+  $users = \Drupal::entityTypeManager()
+    ->getStorage('user')
+    ->loadByProperties(['mail' => $email]);
+
+  return !empty($users);
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function blogs_entity_insert(EntityInterface $entity) {
+  // Check if the new entity is an user.
+  if ($entity->getEntityTypeId() === 'user') {
+    // Send notification to the admin.
+    _blogs_send_admin_notification($entity);
+    // Send email to the user.
+    _blogs_send_user_email($entity);
+  }
+}
+
+/**
+ * Function which sends a notification to all the admins.
+ *
+ * @param User $entity
+ *   The new registered user.
+ */
+function _blogs_send_admin_notification(User $entity) {
+  // Build the notification.
+  $notification = <<<EOT
+  A new user has applied for an account!
+
+  Details:
+  - User Id: {$entity->id()}
+  - Full Name: {$entity->getDisplayName()}
+  - Email: {$entity->getEmail()}
+  EOT;
+
+  \Drupal::logger('blogs')->notice(nl2br($notification));
+}
+
+/**
+ * Function which sends an email to the user.
+ *
+ * @param User $user
+ *   The new registered user.
+ */
+function _blogs_send_user_email(User $entity) {
+  $mailManager = \Drupal::service('plugin.manager.mail');
+  $module = 'blogs';
+  $key = 'user_notification';
+  $to = $entity->getEmail();
+  $langcode = $entity->getPreferredLangcode();
+  $params = [];
+
+  // Collect user data.
+  $params['subject'] = 'Welcome!';
+  $params['message'] = <<<EOT
+
+  Hi, {$entity->getDisplayName()}.
+
+  Thank you for your submission. We will get back to you soon.
+  EOT;
+
+  $send = TRUE;
+  $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+}
+
+/**
+ * Implements hook_mail().
+ */
+function blogs_mail($key, &$message, $params) {
+  $message['subject'] = $params['subject'];
+  $message['body'][] = $params['message'];
+}
+
+/**
+ * Implements hook_link_alter().
+ */
+function blogs_link_alter(&$variables) {
+  // Check if the link's route name matches the specific link you want to target.
+  if ($variables['url']->toString() === '/blog-list') {
+    // Add the 'target' attribute to the link's options.
+    $variables['options']['attributes']['target'] = '_blank';
+    // Optional: Add rel="noopener noreferrer" for security.
+    $variables['options']['attributes']['rel'] = 'noopener noreferrer';
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function blogs_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $connection = Database::getConnection();
+
+  // Get the number of likes.
+  $likes = $connection->select('node__like_dislike_count')
+    ->condition('blog', $entity->id())
+    ->condition('like_status', 1)
+    ->countQuery()
+    ->execute()
+    ->fetchField();
+
+  // Get the number of dislikes.
+  $dislikes = $connection->select('node__like_dislike_count')
+    ->condition('blog', $entity->id())
+    ->condition('dislike_status', 1)
+    ->countQuery()
+    ->execute()
+    ->fetchField();
+
+  $build['likes_count'] = [
+    '#plain_text' => (int) $likes,
+  ];
+  $build['dislikes_count'] = [
+    '#plain_text' => (int) $dislikes,
+  ];
+}
+
+/**
+ * Implements hook_cron().
+ */
+function blogs_cron() {
+  $connection = Database::getConnection();
+  // Set the expiry time to 10 minutes before the current time.
+  $expiry_time = \Drupal::time()->getCurrentTime() - 600;
+
+  // Delete all the otp(s) which are older than 10 minutes.
+  $deleted = $connection->delete('registration_otp')
+    ->condition('created', $expiry_time, '<')
+    ->execute();
+
+  if ($deleted) {
+    \Drupal::logger('blogs')->notice('Deleted @count expired OTP(s).', ['@count' => $deleted]);
+  }
+}

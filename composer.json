@@ -20,6 +20,8 @@
         "drupal/core-project-message": "^10.5",
         "drupal/core-recommended": "^10.5",
         "drupal/devel": "^5.4",
+        "drupal/maillog": "^1.1",
+        "drupal/select_registration_roles": "^2.0",
         "drush/drush": "^12.5"
     },
     "conflict": {
@@ -30,11 +32,12 @@
     "config": {
         "allow-plugins": {
             "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
-            "phpstan/extension-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "phpro/grumphp": true,
+            "phpstan/extension-installer": true
         },
         "sort-packages": true
     },
@@ -94,5 +97,8 @@
                 "      composer remove drupal/core-project-message"
             ]
         }
+    },
+    "require-dev": {
+        "phpro/grumphp": "^2.15"
     }
 }

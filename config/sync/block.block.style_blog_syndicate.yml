@@ -1,0 +1,23 @@
+uuid: 9e7f1cdf-6607-4d7f-a720-10083e436e74
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  theme:
+    - style_blog
+_core:
+  default_config_hash: 0gq3VPg-_UM69FCCWurLFIrrnIjC2HLKhwo9iQNtcUo
+id: style_blog_syndicate
+theme: style_blog
+region: sidebar_first
+weight: 0
+provider: null
+plugin: node_syndicate_block
+settings:
+  id: node_syndicate_block
+  label: 'RSS feed'
+  label_display: '0'
+  provider: node
+  block_count: 10
+visibility: {  }
