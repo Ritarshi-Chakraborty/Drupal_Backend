@@ -1,0 +1,6 @@
+name: Ritam's custom form
+description: This is my custom forms module.
+package: Custom Modules
+type: module
+version: 10.x
+core_version_requirement: ^10.3 || ^11

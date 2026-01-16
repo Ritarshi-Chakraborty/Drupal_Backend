@@ -1,0 +1,17 @@
+ritam.info_link:
+  title: Info
+  description: My info
+  route_name: ritam.info
+  weight: 2
+  menu_name: main
+  options:
+    attributes:
+      target: _blank
+
+ritam.welcome_link:
+  title: Welcome
+  description: Welcome user role
+  route_name: ritam.welcome
+  weight: 3
+  menu_name: main
+  

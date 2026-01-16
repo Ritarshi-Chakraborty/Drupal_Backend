@@ -1,0 +1,5 @@
+services:
+  custom_service.info_service:
+    class: Drupal\custom_service\Service\ModuleService
+    arguments: ['@current_user']
+    

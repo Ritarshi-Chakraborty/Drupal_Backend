@@ -1,0 +1,60 @@
+<?php
+
+    /**
+    * Implements hook_theme().
+    */
+    function ritam_theme() {
+        return [
+
+            'info'=> [
+                'variables' => [
+                    'data' => []
+                ]
+            ]
+        ];
+    }
+
+    /**
+    * Returns a greeting message
+    */
+    function ritam_greet() {
+       return "This is my custom module.";
+    }
+
+    /**
+     * Implements hook_install().
+     */
+    function ritam_install() {
+        Block::create([
+            'id' => 'welcome_role_block_instance',
+            'plugin' => 'welcome_role_block',
+            'region' => 'sidebar_first',
+            'theme' => 'olivero',
+            'visibility' => [
+            'request_path' => [
+                'id' => 'request_path',
+                'pages' => '/welcome',
+                'negate' => FALSE, // Set to TRUE if you want to hide on these pages
+                'context' => 'canonical',
+            ],
+            ],
+            'settings' => [],
+            'weight' => 0,
+            'status' => 1,
+            'dependencies' => [],
+        ])->save();
+    }
+    
+    /**
+     * Implements hook_user_login().
+     */
+    function ritam_user_login(Drupal\Core\Session\AccountInterface $account) {
+        \Drupal::service('session')->set('custom_login_redirect', TRUE);
+    }
+
+    /**
+     * Implements hook_service_alter()
+     */
+    function ritam_service_alter(array &$services) {
+        $services['ritam.custom_service']['class'] = 'Drupal\ritam\Service\ModifiedService';
+    }

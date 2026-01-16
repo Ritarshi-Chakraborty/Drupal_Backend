@@ -1,0 +1,6 @@
+name: Ritam's custom service
+description: This is my custom services module.
+package: Custom Modules
+type: module
+version: 10.x
+core_version_requirement: ^10.3 || ^11
