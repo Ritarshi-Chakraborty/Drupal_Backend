@@ -1,0 +1,9 @@
+name: Ritam's RGB Color Picker
+type: module
+description: 'A custom module to provide an RGB color picker for Drupal.'
+package: Custom Modules
+version: 10.x
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - field
+  - field_ui
